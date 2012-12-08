@@ -57,6 +57,30 @@ class ProductTest < ActiveSupport::TestCase
 
   end
 
+  def new_product_with_title(title)
+    Product.new(
+      title: title,
+      description: "zzz",
+      price: 1,
+      image_url: "xyz.jpg"
+      )
+
+  end
+
+  test "title length is greater than 10 chars" do
+    ok = %w{ abcdefghij 1234567890 TwitterAPI-pocketReference }
+    bad = %w{ Ruby CleanCode Git }
+
+    ok.each do |title|
+      assert new_product_with_title(title).valid?, "#{title} shouldn't be invalid"
+    end
+
+    bad.each do |title|
+      assert new_product_with_title(title).invalid?, "#{title} shouldn't be valid"
+    end
+
+  end
+
   test "product is not valid without a unique title" do
     product = Product.new(
       title: products(:ruby).title,
