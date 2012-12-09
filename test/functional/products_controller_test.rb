@@ -15,6 +15,12 @@ class ProductsControllerTest < ActionController::TestCase
     get :index
     assert_response :success
     assert_not_nil assigns(:products)
+    assert_select '.list_description' do |elements|
+      elements.each do |element|
+        assert_select element, 'dt', 1
+        assert_select element, 'dd', 1
+      end
+    end
   end
 
   test "should get new" do
@@ -52,4 +58,5 @@ class ProductsControllerTest < ActionController::TestCase
 
     assert_redirected_to products_path
   end
+
 end
