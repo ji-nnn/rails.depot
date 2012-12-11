@@ -59,4 +59,15 @@ class ProductsControllerTest < ActionController::TestCase
     assert_redirected_to products_path
   end
 
+  test "should exist action link" do
+    get :index
+    assert_select '.list_actions' do |elements|
+      elements.each do |element|
+        assert_select element, 'a', 'Show'
+        assert_select element, 'a', 'Edit'
+        assert_select element, 'a', 'Destroy'        
+      end
+    end
+  end
+
 end
